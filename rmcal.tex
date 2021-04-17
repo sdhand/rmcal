@@ -1,0 +1,66 @@
+\documentclass[a4paper]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{amssymb}
+\usepackage{tabularx}
+\usepackage[vlines]{tabularht}
+\usepackage{float}
+\usepackage{lscape}
+\usepackage{tikz}
+\usepackage[breakall]{truncate}
+\usetikzlibrary{calc}
+\usepackage{hyperref}
+
+\newcommand\Tstrut{\rule{0pt}{2.8ex}}       % "top" strut
+
+\newcommand{\Day}[4]{\begin{minipage}[t][0.02\textheight]{\linewidth}
+#4\hfill\hyperlink{#3}{#1}\\%
+#2
+\end{minipage}}
+
+\newcommand{\Week}[7]{#1&#2&#3&#4&#5&#6&#7\Tstrut\\\interrowfill\hline}
+\newcommand{\Month}[3]{\begin{center}
+\textsc{\LARGE \hypertarget{#1}{#1}}\\ % Month
+\textsc{\large #2} % Year
+\end{center}
+
+\begin{table}[H]
+\begin{tabularhtx}{\dimexpr\pagegoal-\pagetotal-\baselineskip\relax}{1.47\textwidth}{|X|X|X|X|X|X|X|}
+\hline
+\hfil Monday \hfil & \hfil Tuesday \hfil & \hfil Wednesday \hfil & \hfil Thursday \hfil & \hfil Friday \hfil & \hfil Saturday \hfil & \hfil Sunday \hfil\\
+\hline
+\hline
+#3
+\end{tabularhtx}
+\end{table}}
+
+\newcommand{\Daynotes}[3]{\newpage
+\begin{tikzpicture}[remember picture,overlay]
+\foreach \i in {1,2,...,28}{
+\draw[lightgray] ($$(current page.south west)+(0,\i)$$) -- ($$(current page.south east)+(0,\i)$$);
+}
+\end{tikzpicture}
+\LARGE{\hypertarget{#1}{#2}} \hfill \LARGE{\hyperlink{#3}{×}}
+}
+
+\newcommand{\Weektodo}[3]{\newpage
+\begin{tikzpicture}[remember picture,overlay]
+\foreach \i in {1,2,...,28}{
+\draw[lightgray] ($$(current page.south west)+(2.12,\i)$$) -- ($$(current page.south east)+(0,\i)$$);
+\ifnum\i<28
+\draw[lightgray] ($$(current page.south west)+(0.76,\i+0.2)$$) -- ($$(current page.south west)+(1.36,\i+0.2)$$) -- ($$(current page.south west)+(1.36,\i+0.8)$$) -- ($$(current page.south west)+(0.76,\i+0.8)$$) -- ($$(current page.south west)+(0.76,\i+0.2)$$);
+\fi
+}
+\end{tikzpicture}
+\LARGE{\hypertarget{#1}{#2}} \hfill \LARGE{\hyperlink{#3}{×}}
+}
+
+\begin{document}
+\pagestyle{empty}
+\noindent
+\begin{landscape}
+$calendar
+\end{landscape}
+\newgeometry{left=1.5cm,top=1cm,right=0.7cm}
+$notepages
+
+\end{document}
